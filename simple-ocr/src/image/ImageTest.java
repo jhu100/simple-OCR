@@ -9,17 +9,18 @@ import org.junit.Test;
 
 /**
  * Very simple tests for Image and Pixel classes.
- * @author Dustin
- *
+ * 
+ * @author Dustin Pho
+ * 
  */
 public class ImageTest {
 
+	Image	testImage;
+
 	/**
-	 * Tests for initializing of image into pixel array
+	 * Called before each test method.
 	 */
-	@Test
-	public void testImage() {
-		URL image;
+	public void setUp() {
 		// image is 4 blocks of solid color
 		//	________________
 		//	|		|		|
@@ -29,20 +30,28 @@ public class ImageTest {
 		//	| green	| blue	|
 		//	|_______|_______|
 		
+		URL image;		
 		try {
 			image = new URL(
 					"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi8IcXDXlZBWhm_xnpe1rn-XvAfeYPwNmhErnzFU1TBWkv_vbz_lEtbP1e");
-		} catch (MalformedURLException e) {
+		}
+		catch (MalformedURLException e) {
 			e.printStackTrace();
 			return;
 		}
-		Image testImage = new Image(image);
+		testImage = new Image(image);
+	}
 
+	/**
+	 * Tests for initializing of image into pixel array
+	 */
+	@Test
+	public void testImage() {
 		// test that all pixels were initialized in the array
 		for (Pixel p : testImage.getPixels()) {
 			assertNotNull(p);
 		}
-		
+
 		Pixel p;
 		// checking that the top left pixel is white
 		p = testImage.getPixel(0, 0);
@@ -54,8 +63,7 @@ public class ImageTest {
 		p = testImage.getPixel(0, testImage.getHeight() - 1);
 		assertTrue(p.RED < 10 && p.GREEN > 250 && p.BLUE < 10);
 		// checking that the bottom right pixel is blue
-		p = testImage.getPixel(testImage.getWidth() - 1,
-				testImage.getHeight() - 1);
+		p = testImage.getPixel(testImage.getWidth() - 1, testImage.getHeight() - 1);
 		assertTrue(p.RED < 10 && p.GREEN < 10 && p.BLUE > 250);
 	}
 
